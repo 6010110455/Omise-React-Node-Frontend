@@ -13,7 +13,7 @@ export class Checkout extends Component {
     OmiseCard.configure({
       publicKey,
       currency: "thb",
-      frameLabel: "Sabai Shop",
+      frameLabel: "CREDIT",
       submitLabel: "PAY NOW",
       buttonLabel: "Pay with Omise",
     });
