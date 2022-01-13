@@ -4,6 +4,7 @@ import Backdrop from "./Backdrop";
 import Modal from "./Modal";
 
 const MessageDetails = ({ closeModal, charge }) => {
+  console.log("charge", charge);
   return (
     <React.Fragment>
       {(!charge || !charge.amount) && <p>Oops...something went wrong!!</p>}

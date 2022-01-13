@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 import MessageDetails from "../components/modal/MessageDetails";
 import Spinner from "../components/spinner/Spinner";
@@ -7,8 +8,21 @@ export class Message extends Component {
   state = {
     loading: false,
     openModal: false,
-    charge: undefined
+    charge: undefined,
   };
+
+  async componentDidMount() {
+    this.setState({ loading: true });
+    const response = await axios.get("http://localhost:80/bank-charge");
+    console.log("res in message", response);
+    if (response.data) {
+      this.setState({
+        loading: false,
+        openModal: true,
+        charge: response.data,
+      });
+    }
+  }
 
   handleCloseModal = () => {
     this.setState({ openModal: false });
