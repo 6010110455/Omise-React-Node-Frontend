@@ -7,10 +7,14 @@ import CheckoutInternetBanking from "../components/checkoutForm/omise-prebuilt-f
 import "./CheckoutPage.css";
 
 export function CartCheckoutPage({ cart, clearCart }) {
-  const [state, setState] = useState({
+  const [stateCard, setStateCard] = useState({
     charge: undefined,
   });
-  console.log("state after checkOut", state);
+  // console.log("stateCard", stateCard);
+  // const [stateInternet, setStateInternet] = useState({
+  //   charge: undefined,
+  // });
+  console.log("state after checkOut", stateCard);
   const createCreditCardCharge = async (email, name, amount, token) => {
     try {
       const res = await // Send a POST request
@@ -29,8 +33,35 @@ export function CartCheckoutPage({ cart, clearCart }) {
       });
       const resData = res.data;
       if (resData) {
-        setState({ charge: resData });
+        setStateCard({ charge: resData });
         clearCart();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const createInternetCharge = async (email, name, amount, token) => {
+    try {
+      const res = await // Send a POST request
+      axios({
+        method: "post",
+        url: "http://localhost:80/checkout-internet-banking",
+        data: {
+          email,
+          name,
+          amount,
+          token,
+        },
+        header: {
+          "Content-Type": "application/json",
+        },
+      });
+      const { authorizeUri } = res.data;
+      if (authorizeUri) {
+        console.log("authorizeUri", authorizeUri);
+        clearCart();
+        window.location.href = authorizeUri;
       }
     } catch (error) {
       console.log(error);
@@ -52,27 +83,30 @@ export function CartCheckoutPage({ cart, clearCart }) {
         cart={cart}
         createCreditCardCharge={createCreditCardCharge}
       />
-      <CheckoutInternetBanking cart={cart} />
+      <CheckoutInternetBanking
+        cart={cart}
+        createInternetCharge={createInternetCharge}
+      />
       <div className="message">
-        {state.charge && (
+        {stateCard.charge && (
           <div>
             <h4>Thank you for your payment with credit card.</h4>
             <p>
               Your payment amount is{" "}
               <span className="amount">
-                {(state.charge.amount / 100).toFixed()} Baht
+                {(stateCard.charge.amount / 100).toFixed()} Baht
               </span>
               , status:{" "}
               <span
                 className={
-                  state.charge.status === "successful"
+                  stateCard.charge.status === "successful"
                     ? "success"
-                    : state.charge.status === "failed"
+                    : stateCard.charge.status === "failed"
                     ? "failed"
                     : "pending"
                 }
               >
-                {state.charge.status}
+                {stateCard.charge.status}
               </span>
             </p>
           </div>

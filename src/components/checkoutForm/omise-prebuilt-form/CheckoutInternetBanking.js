@@ -18,7 +18,7 @@ export class CheckoutInternetBanking extends Component {
     });
   };
 
-  creditCardConfigure = () => {
+  internetConfigure = () => {
     OmiseCard.configure({
       defaultPaymentMethod: "internet_banking",
       otherPaymentMethods: [
@@ -35,13 +35,13 @@ export class CheckoutInternetBanking extends Component {
   };
 
   omiseCardHandler = () => {
-    const { cart, createCreditCardCharge } = this.props;
+    const { cart, createInternetCharge } = this.props;
     OmiseCard.open({
       frameDescription: "Invoice #3847",
       amount: cart.amount,
       onCreateTokenSuccess: (token) => {
         console.log("token", token);
-        // createCreditCardCharge(cart.email, cart.name, cart.amount, token);
+        createInternetCharge(cart.email, cart.name, cart.amount, token);
       },
       onFormClosed: () => {},
     });
@@ -49,7 +49,7 @@ export class CheckoutInternetBanking extends Component {
 
   handleClick = (e) => {
     e.preventDefault();
-    this.creditCardConfigure();
+    this.internetConfigure();
     this.omiseCardHandler();
   };
   render() {
