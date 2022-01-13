@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Script from "react-load-script";
 
+import { publicKey } from "../../confidential/key";
+
 import "./Checkout.css";
 
 export function Checkout({ cart, createCreditCardCharge }) {
@@ -8,7 +10,7 @@ export function Checkout({ cart, createCreditCardCharge }) {
 
   const handelLoadScript = () => {
     window.OmiseCard.configure({
-      publicKey: "pkey_test_5qhieuxrhoil1x7mf51",
+      publicKey,
       currency: "thb",
       frameLabel: "BENZ",
       submitLabel: "จ่ายเลย",
