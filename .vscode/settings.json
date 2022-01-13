@@ -1,0 +1,17 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "cSpell.words": [
+    "กรุณาใส่ข้อมูลให้ครบถ้วน",
+    "สำหรับรูปภาพที่มีอยู่แล้ว",
+    "เหลือสินค้า",
+    "availablemodule",
+    "findproduct",
+    "Infomation",
+    "infomations",
+    "Navbars",
+    "Richtext",
+    "semibold"
+  ],
+  "javascript.suggestionActions.enabled": true
+}
