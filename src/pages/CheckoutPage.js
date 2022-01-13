@@ -6,7 +6,7 @@ import CheckoutInternetBanking from "../components/checkoutForm/omise-prebuilt-f
 
 import "./CheckoutPage.css";
 
-export function CartCheckoutPage({ cart }) {
+export function CartCheckoutPage({ cart, clearCart }) {
   const [state, setState] = useState({
     charge: undefined,
   });
@@ -28,7 +28,10 @@ export function CartCheckoutPage({ cart }) {
         },
       });
       const resData = res.data;
-      setState({ charge: resData });
+      if (resData) {
+        setState({ charge: resData });
+        clearCart();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -50,28 +53,31 @@ export function CartCheckoutPage({ cart }) {
         createCreditCardCharge={createCreditCardCharge}
       />
       <CheckoutInternetBanking cart={cart} />
-      {/* <div className="message">
-          {charge && (
-            <div>
-              <h4>Thank you for your payment with credit card.</h4>
-              <p>
-                Your payment amount is{" "}
-                <span className="amount">{new Intl.NumberFormat().format(charge.amount)} Baht</span>, status:{" "}
-                <span
-                  className={
-                    charge.status === "successful"
-                      ? "success"
-                      : charge.status === "failed"
-                      ? "failed"
-                      : "pending"
-                  }
-                >
-                  {charge.status}
-                </span>
-              </p>
-            </div>
-          )}
-        </div> */}
+      <div className="message">
+        {state.charge && (
+          <div>
+            <h4>Thank you for your payment with credit card.</h4>
+            <p>
+              Your payment amount is{" "}
+              <span className="amount">
+                {(state.charge.amount / 100).toFixed()} Baht
+              </span>
+              , status:{" "}
+              <span
+                className={
+                  state.charge.status === "successful"
+                    ? "success"
+                    : state.charge.status === "failed"
+                    ? "failed"
+                    : "pending"
+                }
+              >
+                {state.charge.status}
+              </span>
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

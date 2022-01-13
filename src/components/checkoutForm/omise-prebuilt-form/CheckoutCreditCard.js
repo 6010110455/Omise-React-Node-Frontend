@@ -59,6 +59,7 @@ export function Checkout({ cart, createCreditCardCharge }) {
           id="checkout-button"
           className="btn"
           type="button"
+          disabled={cart.amount === 0}
           onClick={(creditCardconfig, omiseCardHandler)}
         >
           Pay with Credit Card

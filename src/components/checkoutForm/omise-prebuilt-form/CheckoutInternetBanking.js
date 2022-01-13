@@ -6,12 +6,9 @@ export class CheckoutInternetBanking extends Component {
   render() {
     return (
       <div className="own-form">
-          <button 
-            className="btn internet-banking"
-            type="button"
-          >
-            Pay with Internet Banking / Others
-          </button>
+        <button className="btn internet-banking" type="button">
+          Pay with Internet Banking / Others
+        </button>
       </div>
     );
   }
